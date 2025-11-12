@@ -50,3 +50,27 @@ Application de vente de billets et d’abonnements pour une société de product
 
 > 🧩 **Remarque :**  
 > Ces exigences serviront de base pour la conception des cas d’utilisation et l’identification des composants applicatifs (clients, ventes, paiements, reporting, etc.).
+
+# 2. Catégories proposées
+
+## **Objectif**
+
+Les exigences fonctionnelles et non fonctionnelles identifiées sont regroupées en plusieurs **catégories** afin de faciliter l’analyse, la conception des composants, et la traçabilité entre les besoins et les modules applicatifs.
+
+---
+
+## **Catégories et exigences associées**
+
+| **Catégorie**                               | **Description**                                                                                                                        | **Exigences associées**            |
+| ------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
+| **Client / Buyer**                          | Interface web et mobile pour les clients : navigation dans le catalogue, gestion du panier, génération d’e-tickets, paiement en ligne. | R1, R2, R5, R6, R13, R14, R19, R18 |
+| **Point de vente (POS / Kiosk / Guichet)**  | Bornes automatiques et guichets physiques pour la vente sur site, incluant le mode dégradé/hors ligne et l’interface du personnel.     | R3, R4, R7, R8, R20                |
+| **Produit / Représentation**                | Gestion des spectacles, représentations, salles et disponibilités en temps réel.                                                       | R11, R15                           |
+| **Transaction / Paiement**                  | Gestion du panier, processus de paiement, facturation, remboursements et journalisation des transactions.                              | R12, R16                           |
+| **Reporting / Admin**                       | Accès producteurs délégués, bilans, exports, statistiques, et gestion des rôles et droits d’accès.                                     | R9, R17, R18                       |
+| **Infrastructure / Sécurité / Intégration** | Architecture technique, synchronisation multi-canal, conformité réglementaire, performance et sécurité.                                | NF1, NF2, NF3, NF4, NF5, NF6       |
+
+---
+
+> 💡 **Remarque :**
+> Ces catégories serviront de base pour l’identification des composants applicatifs, la définition des interfaces requises/fournies, et la conception du diagramme de composants.
