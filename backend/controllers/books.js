@@ -1,13 +1,16 @@
 import Author from "../models/authors.js";
 import Book from "../models/book.js";
+import logger from "../utils/logger.js";
 
 const addBook = async (req, res) => {
   try {
-    const { title, description, author } = req.body; // "author" is a string (name)
+    logger.info("Adding Book endpoint");
+    const { title, description, author } = req.body;
 
     // Check if book already exists
     const existingBook = await Book.findOne({ title });
     if (existingBook) {
+      logger.warn("Book already exist");
       return res.status(400).json({
         success: false,
         message: "The book already exists",
@@ -17,6 +20,7 @@ const addBook = async (req, res) => {
     // Find author by name
     const author_ = await Author.findOne({ name: author });
     if (!author_) {
+      logger.warn("Author doesn't exist");
       return res.status(404).json({
         success: false,
         message: `Author "${author}" doesn't exist`,
@@ -30,6 +34,8 @@ const addBook = async (req, res) => {
       author: author_._id, // reference the author ID
       release_date: new Date(),
     });
+
+    logger.info("Book added successfully", newBook._id);
 
     return res.status(201).json({
       success: true,
