@@ -32,6 +32,7 @@ const addBook = async (req, res) => {
       title,
       description,
       author: author_._id, // reference the author ID
+      bookPic: req.file.path, // optional
       release_date: new Date(),
     });
 
@@ -50,4 +51,46 @@ const addBook = async (req, res) => {
   }
 };
 
-export { addBook };
+const addBookPic = async (req, res) => {
+  try {
+    logger.info("Adding book picture endpoint ... ");
+
+    const { id } = req.body;
+
+    if (!req.file) {
+      logger.warn("No picture uploaded ...");
+      return res.status(400).json({
+        success: false,
+        message: "Book picture is required",
+      });
+    }
+
+    const updateBook = await Book.findByIdAndUpdate(
+      id,
+      { bookPic: req.file.path },
+      { new: true }
+    );
+
+    if (!updateBook) {
+      logger.warn("Book doesn't exist inside DB ..");
+      return res.status(404).json({
+        success: false,
+        message: "Book not found",
+      });
+    }
+
+    logger.info("Book picture updated successfully");
+    return res.status(200).json({
+      success: true,
+      message: "Book picture updated",
+      data: updateBook,
+    });
+  } catch {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export { addBook, updateBook };
