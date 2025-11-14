@@ -13,7 +13,11 @@ const bookSchema = new mongoose.Schema({
     ref: "Author",
     required: true,
   },
-
+  bookPic: {
+    type: String,
+    required: false,
+  },
+  categories: {},
   release_date: {
     type: Date,
     required: false,
