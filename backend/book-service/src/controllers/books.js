@@ -93,4 +93,31 @@ const addBookPic = async (req, res) => {
   }
 };
 
-export { addBook, addBookPic };
+const listBooks = async (req, res) => {
+  try {
+    logger.info("Listing Books endpoint...");
+    const books = await Book.find();
+
+    if (books.length === 0) {
+      logger.warn("No more books in list ");
+      return res.status(201).json({
+        success: false,
+        message: "No book in the list",
+        books: [],
+      });
+    }
+
+    logger.info("Book list resquest");
+    return res.status(200).json({
+      success: true,
+      message: "Book lists ",
+      books: books,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: true,
+      message: error.message,
+    });
+  }
+};
+export { addBook, addBookPic, listBooks };
