@@ -11,6 +11,10 @@ const authorSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    bio: {
+      type: String,
+      required: false,
+    },
   },
   { timestamps: true }
 );

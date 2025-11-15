@@ -120,4 +120,86 @@ const listBooks = async (req, res) => {
     });
   }
 };
-export { addBook, addBookPic, listBooks };
+
+const updateBook = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updateData = req.body;
+
+    logger.info("Updated Book Endpoint...");
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      logger.error("Book id is invalid");
+      return res.status(400).json({
+        success: false,
+        message: "Invalid book ID",
+      });
+    }
+
+    const updatedBook = await Book.findByIdAndUpdate(
+      id,
+      { $set: updateData },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedBook) {
+      logger.error("Book doesn't exist in the list");
+      return res.status(404).json({
+        success: false,
+        message: "Book doesn't exist",
+      });
+    }
+
+    logger.info("Book is updated successfully");
+    return res.status(200).json({
+      success: true,
+      message: "Book is updated",
+      updatedBook,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+const deleteBook = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    logger.info("Delete Book Endpoint...");
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      logger.error("Book id is invalid");
+      return res.status(400).json({
+        success: false,
+        message: "Invalid book ID",
+      });
+    }
+
+    const deletedBook = await Book.findByIdAndDelete(id);
+
+    if (!deletedBook) {
+      logger.warn("Book not found by id");
+      return res.status(404).json({
+        success: false,
+        message: "Book not found",
+      });
+    }
+
+    logger.info("Book is deleted successfully");
+
+    return res.status(200).json({
+      success: true,
+      message: "Book is deleted successfully",
+      deletedBook,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export { addBook, addBookPic, listBooks, updateBook, deleteBook };
